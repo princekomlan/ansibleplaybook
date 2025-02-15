@@ -1,0 +1,23 @@
+---
+- name: "Instalation Apach witch docker"
+  hosts: prod
+  become: true
+  vars:
+    ansible_sudo_pass: admin
+  pre_tasks:
+    - name: Install epel repo
+      package: name=epel-release state=present
+      when: ansible_distribution == "CentOS"
+    - name: Download pip script
+      get_url:
+        url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
+        dest: /tmp/get-pip.py
+    - name: Install docker python
+      pip: name=docker-py
+  tasks:
+    - name: Create Apache container
+      docker_container:
+        name: webapp
+        image: httpd
+        ports:
+          - "80:80"
