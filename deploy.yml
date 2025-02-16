@@ -2,8 +2,6 @@
 - name: "Instalation Apach witch docker"
   hosts: prod
   become: true
-  vars:
-    ansible_sudo_pass: admin
   pre_tasks:
     - name: Install epel repo
       package: name=epel-release state=present
