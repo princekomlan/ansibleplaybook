@@ -12,6 +12,8 @@
       get_url:
         url: https://bootstrap.pypa.io/pip/2.7/get-pip.py
         dest: /tmp/get-pip.py
+    - name: Install Python-pip
+      ansible.builtin.command: python2.7 /tmp/get-pip.py
     - name: Install docker python
       pip: name=docker-py
   tasks:
