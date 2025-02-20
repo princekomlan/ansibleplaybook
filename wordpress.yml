@@ -4,15 +4,23 @@
   vars:
     system_user: admin
     compose_binary_dir: /usr/local/bin
+
   pre_tasks:
     - name: create www-data
       user:
         name: www-data
         state: present
+
     - name: Télécharger Docker Compose
       ansible.builtin.get_url:
-        url: "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+        url: "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
         dest: /usr/local/bin/docker-compose
         mode: '0755'
+
+    - name: Ajouter les permissions d'exécutio a Docker Compose
+      ansible.builtin.file:
+        path: /usr/local/bin/docker-compose
+        mode: '0755'
+        state: file
   roles:
     - { role: ansible-role-containerized-wordpress }
